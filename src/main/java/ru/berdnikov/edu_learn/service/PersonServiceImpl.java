@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.entity.Role;
 import ru.berdnikov.edu_learn.entity.Person;
+import ru.berdnikov.edu_learn.error.ErrorCode;
 import ru.berdnikov.edu_learn.repository.PersonRepository;
+import ru.berdnikov.edu_learn.service.exception.UserException;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,18 +43,37 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Boolean existsPersonByEmailAndUsername(String email, String username) {
-        return personRepository.existsPersonByEmailAndUsername(email,username);
+    public void saveUser(PersonDTO person) throws UserException {
+        if(!personExist(person)){
+            personRepository.save(createPerson(person));
+        }
+        throw new UserException(ErrorCode.PERSON_ALREADY_EXIST.getError());
     }
 
     @Override
-    public void saveUser(Person person) {
-        personRepository.save(person);
+    public Boolean passwordMatch(String inPassword, String codePassword) {
+        return passwordEncoder.matches(inPassword, codePassword);
     }
 
     private Set<GrantedAuthority> getAuthorities(Set<Role> roles){
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_"+ role.getName()))
                 .collect(Collectors.toSet());
+    }
+
+    private Boolean personExist(PersonDTO person){
+        return personRepository.existsPersonByEmailAndUsername(person.getEmail(), person.getUsername());
+    }
+
+    private Person createPerson(PersonDTO personDTO) {
+        Set<Role> roleSet = new HashSet<>();
+        Role role = new Role();
+        role.setId(2);
+        roleSet.add(role);
+        return new Person(
+                personDTO.getUsername(),
+                personDTO.getEmail(),
+                passwordEncoder.encode(personDTO.getPassword()).toCharArray(),
+                roleSet);
     }
 }
