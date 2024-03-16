@@ -1,12 +1,12 @@
 package ru.berdnikov.edu_learn.service;
 
 import org.springframework.http.ResponseEntity;
-import ru.berdnikov.edu_learn.entity.AuthToken;
+import ru.berdnikov.edu_learn.dto.AuthTokenDTO;
 
 public interface ResponseService {
-    ResponseEntity<AuthToken> error(String error);
+    ResponseEntity<AuthTokenDTO> error(String error);
 
-    ResponseEntity<AuthToken> success(String error);
+    ResponseEntity<AuthTokenDTO> success(String error);
 
     ResponseEntity<String> passwordError();
 

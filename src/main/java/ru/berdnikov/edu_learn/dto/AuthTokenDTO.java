@@ -1,4 +1,4 @@
-package ru.berdnikov.edu_learn.entity;
+package ru.berdnikov.edu_learn.dto;
 
 import lombok.*;
 
@@ -6,6 +6,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthToken {
+public class AuthTokenDTO {
     private String token;
 }
