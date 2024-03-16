@@ -27,6 +27,6 @@ public class ResponseServiceImpl implements ResponseService{
 
     @Override
     public ResponseEntity<String> emailError(String email) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email: "+ email +" not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorCode.USER_NOT_FOUND.getError());
     }
 }

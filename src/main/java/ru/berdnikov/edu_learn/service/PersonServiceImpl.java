@@ -32,9 +32,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         Person person = personRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Person with email: " + email + " not found"));
+                .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND.getError()));
         return new org.springframework.security.core.userdetails.User(
                 person.getUsername(),
                 Arrays.toString(person.getPassword()),
