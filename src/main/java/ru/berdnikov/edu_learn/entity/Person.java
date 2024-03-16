@@ -1,19 +1,17 @@
 package ru.berdnikov.edu_learn.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "person")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
     @Id
     @Column(name = "id")

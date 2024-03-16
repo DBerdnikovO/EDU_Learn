@@ -11,6 +11,7 @@ public class WSCHelper {
         LOGIN("/login/**"),
         REGIS("/reg/**"),
         ADMIN("/admin/**"),
+        USER("/user/**"),
         PUB("/public/**");
 
         Resources(String res) {

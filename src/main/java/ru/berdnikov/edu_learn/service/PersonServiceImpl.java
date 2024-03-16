@@ -6,23 +6,27 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.entity.Role;
 import ru.berdnikov.edu_learn.entity.Person;
 import ru.berdnikov.edu_learn.repository.PersonRepository;
 
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository personRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository) {
+    public PersonServiceImpl(PersonRepository personRepository, PasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -44,11 +48,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void saveUser(Person person) {
         personRepository.save(person);
-    }
-
-    @Override
-    public Person loadUserByEmail(String email) {
-        return personRepository.findUserByEmail(email).get();
     }
 
     private Set<GrantedAuthority> getAuthorities(Set<Role> roles){

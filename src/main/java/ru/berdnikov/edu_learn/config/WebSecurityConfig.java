@@ -53,7 +53,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WSCHelper.Resources.LOGIN.name()).permitAll()
                         .requestMatchers(WSCHelper.Resources.REGIS.name()).permitAll()
-                        .requestMatchers(WSCHelper.Resources.ADMIN.name()).hasRole(WSCHelper.Roles.ADMIN.name())
+                        .requestMatchers("/admin/**").hasRole(WSCHelper.Roles.ADMIN.name())
+                        .requestMatchers("/user/**").hasRole(WSCHelper.Roles.USER.name())
                         .requestMatchers(WSCHelper.Resources.PUB.name()).permitAll()
                         .anyRequest().permitAll()
                 );

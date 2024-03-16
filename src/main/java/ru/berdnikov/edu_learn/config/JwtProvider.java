@@ -17,6 +17,4 @@ public interface JwtProvider {
     String generateToken(String email);
 
     Boolean validateToken(String token, String tokenEmail);
-
-    UsernamePasswordAuthenticationToken getAuthenticationToken(String token, Authentication existingAuth, UserDetails userDetails);
 }
