@@ -7,7 +7,7 @@ import ru.berdnikov.edu_learn.entity.Person;
 import java.util.Optional;
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person,Integer> {
+public interface PersonRepository extends JpaRepository<Person,Long> {
     Optional<Person> findUserByEmail(String email);
 
     Boolean existsPersonByEmailAndUsername(String email, String username);

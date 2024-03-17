@@ -4,8 +4,6 @@ package ru.berdnikov.edu_learn.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
@@ -13,9 +11,9 @@ import ru.berdnikov.edu_learn.entity.Role;
 import ru.berdnikov.edu_learn.entity.Person;
 import ru.berdnikov.edu_learn.error.ErrorCode;
 import ru.berdnikov.edu_learn.repository.PersonRepository;
+import ru.berdnikov.edu_learn.security.PersonDetails;
 import ru.berdnikov.edu_learn.service.exception.UserException;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,22 +30,20 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) {
+    public PersonDetails loadUserByUsername(String email) {
         Person person = personRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND.getError()));
-        return new org.springframework.security.core.userdetails.User(
-                person.getUsername(),
-                Arrays.toString(person.getPassword()),
-                getAuthorities(person.getRoles())
-        );
+        return new PersonDetails(person);
     }
 
     @Override
     public void saveUser(PersonDTO person) throws UserException {
         if(!personExist(person)){
-            personRepository.save(createPerson(person));
+            Person person1 = createPerson(person);
+            personRepository.save(person1);
+        } else {
+            throw new UserException(ErrorCode.PERSON_ALREADY_EXIST.getError());
         }
-        throw new UserException(ErrorCode.PERSON_ALREADY_EXIST.getError());
     }
 
     @Override

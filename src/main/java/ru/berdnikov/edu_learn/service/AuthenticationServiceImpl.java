@@ -2,11 +2,11 @@ package ru.berdnikov.edu_learn.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.berdnikov.edu_learn.config.JwtProvider;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.dto.AuthTokenDTO;
+import ru.berdnikov.edu_learn.security.PersonDetails;
 import ru.berdnikov.edu_learn.service.exception.UserException;
 
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public ResponseEntity<?> login(PersonDTO personDTO) {
-        Optional<UserDetails> optionalPerson = Optional.ofNullable(personService.loadUserByUsername(personDTO.getEmail()));
+        Optional<PersonDetails> optionalPerson = Optional.ofNullable(personService.loadUserByUsername(personDTO.getEmail()));
         return optionalPerson.map(person -> {
             String codePassword = person.getPassword().replaceAll("[\\[\\], ]", "");
             if (personService.passwordMatch(personDTO.getPassword(), codePassword)) {
