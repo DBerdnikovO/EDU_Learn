@@ -7,12 +7,13 @@ import ru.berdnikov.edu_learn.security.PersonDetails;
 
 import java.util.Optional;
 
-public class AuditorAwareImpl implements AuditorAware<String> {
+public class AuditorAwareImpl implements AuditorAware<Long> {
     @Override
-    public Optional<String> getCurrentAuditor() {
+    public Optional<Long> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.isAuthenticated()){
-            return Optional.of(((PersonDetails) authentication.getPrincipal()).getPersonId().toString());
+            PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+            return Optional.of(personDetails.getPersonId());
         }
         return Optional.empty();
     }

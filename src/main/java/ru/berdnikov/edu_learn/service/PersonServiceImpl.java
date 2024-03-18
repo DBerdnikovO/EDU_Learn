@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.entity.Role;
 import ru.berdnikov.edu_learn.entity.Person;
@@ -37,6 +39,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public void saveUser(PersonDTO person) throws UserException {
         if(!personExist(person)){
             Person person1 = createPerson(person);

@@ -29,7 +29,7 @@ public class EduLearnApplication {
     }
 
     @Bean
-    public AuditorAware<String> auditorAware() {
+    public AuditorAware<Long> auditorAware() {
         return new AuditorAwareImpl();
     }
 }

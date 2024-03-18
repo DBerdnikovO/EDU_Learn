@@ -23,6 +23,10 @@ public class PersonDetails implements UserDetails {
         return person.getId();
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = person.getRoles();
