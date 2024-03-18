@@ -1,4 +1,4 @@
-package ru.berdnikov.edu_learn.service;
+package ru.berdnikov.edu_learn.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,11 +7,12 @@ import ru.berdnikov.edu_learn.entity.Audit;
 import ru.berdnikov.edu_learn.entity.Game;
 import ru.berdnikov.edu_learn.repository.GameAuditRepository;
 import ru.berdnikov.edu_learn.repository.GameRepository;
+import ru.berdnikov.edu_learn.service.GameService;
 
 import java.util.List;
 
 @Service
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
     private final GameAuditRepository gameAuditRepository;
 

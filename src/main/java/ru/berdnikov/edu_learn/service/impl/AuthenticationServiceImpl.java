@@ -1,4 +1,4 @@
-package ru.berdnikov.edu_learn.service;
+package ru.berdnikov.edu_learn.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +7,9 @@ import ru.berdnikov.edu_learn.config.JwtProvider;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.dto.AuthTokenDTO;
 import ru.berdnikov.edu_learn.security.PersonDetails;
+import ru.berdnikov.edu_learn.service.AuthenticationService;
+import ru.berdnikov.edu_learn.service.PersonService;
+import ru.berdnikov.edu_learn.service.ResponseService;
 import ru.berdnikov.edu_learn.service.exception.UserException;
 
 import java.util.Optional;

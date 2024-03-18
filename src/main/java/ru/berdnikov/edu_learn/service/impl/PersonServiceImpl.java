@@ -1,4 +1,4 @@
-package ru.berdnikov.edu_learn.service;
+package ru.berdnikov.edu_learn.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import ru.berdnikov.edu_learn.entity.Person;
 import ru.berdnikov.edu_learn.error.ErrorCode;
 import ru.berdnikov.edu_learn.repository.PersonRepository;
 import ru.berdnikov.edu_learn.security.PersonDetails;
+import ru.berdnikov.edu_learn.service.PersonService;
 import ru.berdnikov.edu_learn.service.exception.UserException;
 
 import java.util.HashSet;

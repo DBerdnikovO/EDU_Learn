@@ -1,13 +1,14 @@
-package ru.berdnikov.edu_learn.service;
+package ru.berdnikov.edu_learn.service.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.berdnikov.edu_learn.dto.AuthTokenDTO;
 import ru.berdnikov.edu_learn.error.ErrorCode;
+import ru.berdnikov.edu_learn.service.ResponseService;
 
 @Service
-public class ResponseServiceImpl implements ResponseService{
+public class ResponseServiceImpl implements ResponseService {
     @Override
     public ResponseEntity<AuthTokenDTO> error(String error) {
         return ResponseEntity.badRequest().body(new AuthTokenDTO(error));
