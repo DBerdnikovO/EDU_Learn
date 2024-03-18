@@ -1,4 +1,4 @@
-package ru.berdnikov.edu_learn.service.exception;
+package ru.berdnikov.edu_learn.error.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

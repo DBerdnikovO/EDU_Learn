@@ -10,7 +10,7 @@ import ru.berdnikov.edu_learn.security.PersonDetails;
 import ru.berdnikov.edu_learn.service.AuthenticationService;
 import ru.berdnikov.edu_learn.service.PersonService;
 import ru.berdnikov.edu_learn.service.ResponseService;
-import ru.berdnikov.edu_learn.service.exception.UserException;
+import ru.berdnikov.edu_learn.error.exception.UserException;
 
 import java.util.Optional;
 

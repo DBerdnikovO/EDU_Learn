@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.berdnikov.edu_learn.dto.PersonDTO;
 import ru.berdnikov.edu_learn.entity.Role;
@@ -15,7 +14,7 @@ import ru.berdnikov.edu_learn.error.ErrorCode;
 import ru.berdnikov.edu_learn.repository.PersonRepository;
 import ru.berdnikov.edu_learn.security.PersonDetails;
 import ru.berdnikov.edu_learn.service.PersonService;
-import ru.berdnikov.edu_learn.service.exception.UserException;
+import ru.berdnikov.edu_learn.error.exception.UserException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,23 +41,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void saveUser(PersonDTO person) throws UserException {
-        if(!personExist(person)){
+        if(personExist(person)){
+            throw new UserException(ErrorCode.PERSON_ALREADY_EXIST.getError());
+        } else {
             Person person1 = createPerson(person);
             personRepository.save(person1);
-        } else {
-            throw new UserException(ErrorCode.PERSON_ALREADY_EXIST.getError());
         }
     }
 
     @Override
     public Boolean passwordMatch(String inPassword, String codePassword) {
         return passwordEncoder.matches(inPassword, codePassword);
-    }
-
-    private Set<GrantedAuthority> getAuthorities(Set<Role> roles){
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+ role.getName()))
-                .collect(Collectors.toSet());
     }
 
     private Boolean personExist(PersonDTO person){

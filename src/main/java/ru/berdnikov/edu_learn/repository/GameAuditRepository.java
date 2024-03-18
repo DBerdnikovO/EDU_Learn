@@ -6,4 +6,5 @@ import ru.berdnikov.edu_learn.entity.Audit;
 
 @Repository
 public interface GameAuditRepository extends JpaRepository<Audit, Long> {
+    Audit findAuditById(Long id);
 }
