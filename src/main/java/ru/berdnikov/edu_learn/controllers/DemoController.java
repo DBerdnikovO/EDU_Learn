@@ -32,7 +32,7 @@ public class DemoController {
 
     @PostMapping("/game")
     public ResponseEntity<String> addGame(@RequestBody Game game){
-        gameService.saveGame(game);
+        gameService.saveGameWithAudit(game);
         return ResponseEntity.ok().body("SUCCESS");
     }
 

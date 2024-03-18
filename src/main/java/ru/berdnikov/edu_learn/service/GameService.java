@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GameService {
     List<Game> getAllGames();
-    void saveGame(Game game);
+    void saveGameWithAudit(Game game);
     void deleteGame(Long id);
     void updateGame(Game game, Long id);
 }
