@@ -41,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader(HEADER_STRING);
+        logger.info(" Header : {}", header);
         String authToken = null;
         String email = null;
 
@@ -54,11 +55,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             } catch (ExpiredJwtException e) {
                 logger.info("Given jwt token is expired !!");
                 e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT Token Expired");
             } catch (MalformedJwtException e) {
                 logger.info("Some changed has done in token !! Invalid Token");
                 e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
+                return;
             } catch (Exception e) {
                 e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
             }
         } else {
             logger.warn("Invalid Header Value !! ");

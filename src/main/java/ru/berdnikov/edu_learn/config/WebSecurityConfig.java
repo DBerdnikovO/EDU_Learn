@@ -17,10 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig implements WebMvcConfigurer {
-
-    /**
-     * Его основная цель - обработать ситуацию, когда аутентификация пользователя не удалась.
-     */
     private final UnauthorizedEntryPoint unauthorizedEntryPoint;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -30,10 +26,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-
-    /**
-     * цепочка фильтров безопасности
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -52,17 +44,11 @@ public class WebSecurityConfig implements WebMvcConfigurer {
         return http.build();
     }
 
-    /**
-     * создаем AuthenticationManager.
-     * */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    /**
-     * конфигуратор для обработки CORS
-     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

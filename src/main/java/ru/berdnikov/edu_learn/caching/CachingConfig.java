@@ -1,5 +1,6 @@
 package ru.berdnikov.edu_learn.caching;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,13 +15,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.management.timer.Timer;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 @Configuration
 @EnableCaching
 @EnableScheduling
 public class CachingConfig {
-    private Logger logger;
+    private final Logger logger;
+
+    @Autowired
+    public CachingConfig(Logger logger) {
+        this.logger = logger;
+    }
 
     @Bean
     public CacheManager cacheManager() {
