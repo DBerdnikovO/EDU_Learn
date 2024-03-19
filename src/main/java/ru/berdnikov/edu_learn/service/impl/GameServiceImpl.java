@@ -1,6 +1,10 @@
 package ru.berdnikov.edu_learn.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "games")
 public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
     private final GameAuditRepository gameAuditRepository;
@@ -29,6 +34,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Cacheable
     public List<Game> getAllGames() {
         return gameRepository.findAll();
     }
@@ -47,12 +53,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @CacheEvict(value = "game", key = "#id")
     public void deleteGame(Long id) {
         this.gameRepository.deleteById(id);
     }
 
     @Override
     @Transactional
+    @CachePut(value = "game", key = "#id")
     public void updateGame(Game game, Long id) {
         Game gameDB = gameRepository.findById(id).orElseThrow(() ->
                 new GameException(ErrorCode.GAME_NOT_EXIST.getError()));
